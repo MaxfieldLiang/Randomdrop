@@ -25,7 +25,7 @@ public class Listeners implements Listener {
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         ArrayList<ItemStack> drop = ItemUtil.getDropList(event.getPlayer());
-        if (drop != null) {
+        if (!drop.isEmpty()) {
             event.getPlayer().sendMessage(ItemUtil.colorString(Randomdrop.getPluginConfig().getString("dropItemMessage").replace("%player%", event.getPlayer()
                     .getName()).replace("%location%", ItemUtil.getPlayerLocation(event.getPlayer())).replace("%itemlist%"
                     , ItemUtil.getItemsInfo(drop))));

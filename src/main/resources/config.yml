@@ -2,4 +2,4 @@ dropAmount: 2 #掉落多少个物品
 #死亡掉落信息, %player%是死亡掉落玩家的名字 %location%是物品掉落的位置   %itemlist%是掉落的物品列表
 dropItemMessage: '&9[死亡掉落] &r玩家:[&c%player%&r] 在 %location% 掉落了&r %itemlist%'
 #不掉落的物品, 尽量在游戏里面添加不要在后台添加
-notDropItemList:
+notDropItemList: 'space'

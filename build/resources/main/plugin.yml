@@ -7,4 +7,6 @@ authors: [Maxfield]
 description: For Atong
 commands:
   randomdrop:
+    aliases: [rd]
+    usage: '/randomdrop reload /randomdrop add'
     description: '添加物品无法掉落'

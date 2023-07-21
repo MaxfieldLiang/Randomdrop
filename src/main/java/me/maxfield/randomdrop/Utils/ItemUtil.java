@@ -11,7 +11,6 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
 
 public class ItemUtil {
@@ -25,19 +24,25 @@ public class ItemUtil {
         Inventory inventory = player.getInventory();
 
         ArrayList<ItemStack> drop = new ArrayList();
-        for (int droppedItem = dropAmount; droppedItem > 0; --droppedItem) {
+
+        for (int dropA = dropAmount; dropA > 0; --dropA) {
             int slot = (new Random()).nextInt(inventory.getSize());
-            if (player.getInventory().getItem(slot) != null) {
-                player.getWorld().dropItem(player.getLocation(), player.getInventory().getItem(slot));
-                drop.add(player.getInventory().getItem(slot));
-                player.getInventory().setItem(slot, new ItemStack(Material.AIR));
+            ItemStack itemStack = player.getInventory().getItem(slot);
+            if (itemStack != null) {
+                if (itemStack.getType() != Material.AIR) {
+                    if (!Randomdrop.getPluginConfig().getString("notDropItemList").contains(itemStack.getType().name())) {
+                        player.getWorld().dropItem(player.getLocation(), itemStack);
+                        drop.add(itemStack);
+                        player.getInventory().setItem(slot, new ItemStack(Material.AIR));
+                    }
+                }
             }
         }
-        if (drop != null) {
-            Location playerLocation = player.getLastDeathLocation();
-            int lX = (int) playerLocation.getX();
-            int lY = (int) playerLocation.getY();
-            int lZ = (int) playerLocation.getZ();
+        if (!drop.isEmpty()) {
+            Location location = player.getLocation();
+            int lX = (int) location.getX();
+            int lY = (int) location.getY();
+            int lZ = (int) location.getZ();
             addPlayerLocation(player,player.getLocation().getWorld().getName() + " X:" + lX + " Y:" + lY + " Z:" + lZ);
             addDropList(player, drop);
         }
@@ -58,19 +63,14 @@ public class ItemUtil {
 
     public static String getItemInfo(ItemStack itemStack) {
         StringBuilder stringBuilder = new StringBuilder();
-        Material material = itemStack.getType();
         String name;
         if (itemStack.hasItemMeta() && itemStack.getItemMeta().hasDisplayName()) {
             name = itemStack.getItemMeta().getDisplayName();
         } else {
             name = itemStack.getType().name();
         }
-        List<String> lore = itemStack.getItemMeta().getLore();
         int amount = itemStack.getAmount();
         stringBuilder.append(ChatColor.YELLOW).append(name).append(" x" + amount).append("\n");
-        if (lore != null) {
-            stringBuilder.append(ChatColor.YELLOW + "附魔: ").append(lore.toString()).append("\n");
-        }
         return stringBuilder.toString();
     }
 
