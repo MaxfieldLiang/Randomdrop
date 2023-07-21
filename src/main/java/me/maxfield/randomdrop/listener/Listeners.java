@@ -4,6 +4,7 @@ package me.maxfield.randomdrop.listener;
 import me.maxfield.randomdrop.Randomdrop;
 import me.maxfield.randomdrop.Utils.ItemUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 public class Listeners implements Listener {
     @EventHandler
     public void onPlayerDead(PlayerDeathEvent event) {
-        if (event.getKeepInventory()) {
+        if (event.getKeepInventory() && (event.getEntity().getPlayer().getGameMode() != GameMode.SPECTATOR && event.getEntity().getPlayer().getGameMode() != GameMode.CREATIVE)) {
             ItemUtil.dropPlayerItem(event.getEntity().getPlayer(), ItemUtil.getDropAmount());
         }
     }
