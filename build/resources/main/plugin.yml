@@ -1,0 +1,10 @@
+name: Randomdrop
+version: '1.0'
+main: me.maxfield.randomdrop.Randomdrop
+api-version: '1.20'
+prefix: RandomDrop
+authors: [Maxfield]
+description: For Atong
+commands:
+  randomdrop:
+    description: '添加物品无法掉落'
