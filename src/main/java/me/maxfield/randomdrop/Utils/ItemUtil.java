@@ -4,7 +4,6 @@ import me.maxfield.randomdrop.Randomdrop;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -16,8 +15,6 @@ import java.util.Random;
 public class ItemUtil {
     private static HashMap<Player, ArrayList<ItemStack>> playerItemList = new HashMap<>();
     private static HashMap<Player, String> playerLocation = new HashMap<>();
-    private static final FileConfiguration config = Randomdrop.getPluginConfig();
-    private static final int dropAmount = config.getInt("dropAmount");
 
 
     public static void dropPlayerItem(Player player, int dropAmount) {
@@ -51,15 +48,12 @@ public class ItemUtil {
     public static String getItemsInfo(ArrayList<ItemStack> itemStacks) {
         StringBuilder stringBuilder = new StringBuilder();
         for (ItemStack itemStack : itemStacks) {
-            stringBuilder.append(getItemInfo(itemStack) + " ");
+            stringBuilder.append(getItemInfo(itemStack)).append(" ");
         }
         return stringBuilder.toString();
     }
 
-    public static String colorString(String string) {
-        string = ChatColor.translateAlternateColorCodes('&', string);
-        return string;
-    }
+
 
     public static String getItemInfo(ItemStack itemStack) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -72,10 +66,6 @@ public class ItemUtil {
         int amount = itemStack.getAmount();
         stringBuilder.append(ChatColor.YELLOW).append(name).append(" x" + amount).append("\n");
         return stringBuilder.toString();
-    }
-
-    public static int getDropAmount() {
-        return dropAmount;
     }
 
     public static HashMap<Player, ArrayList<ItemStack>> getPlayerItemList() {

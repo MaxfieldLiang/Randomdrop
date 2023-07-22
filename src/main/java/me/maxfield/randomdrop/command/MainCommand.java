@@ -42,8 +42,19 @@ public class MainCommand implements CommandExecutor {
                         sender.sendMessage(ChatColor.RED + "请在手上拿着物品");
                     }
                     return true;
+                } else if (args[0].equalsIgnoreCase("enable")) {
+                    if (Randomdrop.getPluginConfig().getBoolean("enable")) {
+                        Randomdrop.getPluginConfig().set("enable", false);
+                        Randomdrop.getPlugin(Randomdrop.class).saveConfig();
+                        sender.sendMessage(ChatColor.GREEN + "关闭");
+                    } else {
+                        Randomdrop.getPluginConfig().set("enable", true);
+                        Randomdrop.getPlugin(Randomdrop.class).saveConfig();
+                        sender.sendMessage(ChatColor.GREEN + "开启");
+                    }
+                    return true;
                 } else {
-                    sender.sendMessage(ChatColor.RED + "/randomdrop reload或者add");
+                    sender.sendMessage(ChatColor.RED + "/randomdrop reload enable add");
                     return true;
                 }
             }
