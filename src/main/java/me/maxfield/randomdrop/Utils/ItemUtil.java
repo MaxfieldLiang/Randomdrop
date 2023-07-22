@@ -13,8 +13,8 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class ItemUtil {
-    private static HashMap<Player, ArrayList<ItemStack>> playerItemList = new HashMap<>();
-    private static HashMap<Player, String> playerLocation = new HashMap<>();
+    private static final HashMap<Player, ArrayList<ItemStack>> playerItemList = new HashMap<>();
+    private static final HashMap<Player, String> playerLocation = new HashMap<>();
 
 
     public static void dropPlayerItem(Player player, int dropAmount) {

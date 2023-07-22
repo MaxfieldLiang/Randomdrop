@@ -20,9 +20,10 @@ public class Listeners implements Listener {
     @EventHandler
     public void onPlayerDead(PlayerDeathEvent event) {
         Player player = event.getEntity().getPlayer();
-        if (!event.getKeepInventory() && Randomdrop.getPluginConfig().getBoolean("enable")) {
-            event.setKeepInventory(true);
+        if (Randomdrop.getPluginConfig().getBoolean("enable")) {
             if (player.getGameMode() != GameMode.SPECTATOR && player.getGameMode() != GameMode.CREATIVE) {
+                event.setKeepInventory(true);
+                event.getDrops().clear();
                 ItemUtil.dropPlayerItem(player, Randomdrop.getPluginConfig().getInt("dropAmount"));
                 ArrayList<ItemStack> drop = ItemUtil.getDropList(player);
                 if (!drop.isEmpty()) {
@@ -30,9 +31,11 @@ public class Listeners implements Listener {
                             .getName()).replace("%location%", ItemUtil.getPlayerLocation(player)).replace("%itemlist%"
                             , ItemUtil.getItemsInfo(drop))));
                     for (Player serverPlayer : Bukkit.getOnlinePlayers()) {
-                        serverPlayer.sendMessage(ChatUtil.colorString(Randomdrop.getPluginConfig().getString("dropItemMessage").replace("%player%", player
-                                .getName()).replace("%location%", ItemUtil.getPlayerLocation(player)).replace("%itemlist%"
-                                , ItemUtil.getItemsInfo(drop))));
+                        if (serverPlayer != player) {
+                            serverPlayer.sendMessage(ChatUtil.colorString(Randomdrop.getPluginConfig().getString("dropItemMessage").replace("%player%", player
+                                    .getName()).replace("%location%", ItemUtil.getPlayerLocation(player)).replace("%itemlist%"
+                                    , ItemUtil.getItemsInfo(drop))));
+                        }
                     }
                     ItemUtil.removeDropList(player);
                     ItemUtil.removePlayerLocation(player);
